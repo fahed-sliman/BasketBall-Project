@@ -1,0 +1,167 @@
+<!-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="src/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>basketballthreejsproject</title>
+  </head>
+  <body>
+    <div id="app">
+      <div
+        id="calcator-section"
+        class="transition-all duration-1000 shadow-gray-950/20 shadow-2xl border-l-gray-500"
+      >
+        <form action="">
+          <input
+            type="text"
+            class="border border-white outline-none t text-white text-center p-3 text-3xl"
+          />
+          <br />
+          <button
+            class="border p-3 text-2xl w-full border-none text-white backdrop-blur-xl cursor-pointer"
+            id="btn"
+          >
+            calclate
+          </button>
+          <h3 class="hidden text-center text-2xl font-bold text-white"></h3>
+        </form>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Aerodynamic Basketball Simulation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="w-screen h-screen flex text-slate-200 overflow-hidden antialiased select-none">
+
+  <div id="canvas-container" class="flex-1 h-full relative"></div>
+
+  <aside class="w-80 h-full bg-slate-950/95 border-l border-white/10 backdrop-blur-xl flex flex-col z-20 shadow-2xl overflow-y-auto custom-scroll">
+    <div class="p-5 border-b border-white/10">
+      <h1 class="text-xl font-bold text-orange-500 tracking-tight flex items-center gap-2">🏀 Aerodynamics</h1>
+      <p class="text-xs text-slate-400 mt-0.5">Vector Mathematical Solver Environment</p>
+    </div>
+
+    <div class="p-5 space-y-6 flex-1 text-xs">
+      <div class="space-y-3">
+        <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">1. Launch Parameters</h3>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Speed (v0)</label><div><span id="v0-val" class="text-cyan-400 font-mono font-bold">7.5</span> <span class="text-slate-500">m/s</span></div></div>
+          <input id="v0" type="range" min="3" max="12" step="0.1" value="7.5" class="w-full">
+        </div>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Vertical Angle (θ)</label><div><span id="theta-val" class="text-cyan-400 font-mono font-bold">52</span> <span class="text-slate-500">°</span></div></div>
+          <input id="theta" type="range" min="20" max="80" step="1" value="52" class="w-full">
+        </div>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Lateral Angle (φ)</label><div><span id="phi-val" class="text-cyan-400 font-mono font-bold">0</span> <span class="text-slate-500">°</span></div></div>
+          <input id="phi" type="range" min="-30" max="30" step="1" value="0" class="w-full">
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">2. Rotational Mechanics</h3>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Spin Rate (ω)</label><div><span id="omega-val" class="text-cyan-400 font-mono font-bold">20</span> <span class="text-slate-500">rad/s</span></div></div>
+          <input id="omega" type="range" min="0" max="40" step="1" value="20" class="w-full">
+        </div>
+        <div class="grid grid-cols-3 gap-1 pt-0.5">
+          <button data-value="Backspin" class="spin-btn py-1 text-[11px] rounded bg-orange-500 text-white font-medium cursor-pointer transition">Backspin</button>
+          <button data-value="Topspin" class="spin-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">Topspin</button>
+          <button data-value="None" class="spin-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">None</button>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">3. Fluid Environment</h3>
+        <div class="grid grid-cols-2 gap-1 mb-1">
+          <button data-value="Indoor" class="venue-btn py-1 text-[11px] rounded bg-cyan-500 text-white font-medium cursor-pointer transition">Indoor (ρ=1.2)</button>
+          <button data-value="Outdoor" class="venue-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">Outdoor (ρ=1.1)</button>
+        </div>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Wind X (Forward/Head)</label><div><span id="windX-val" class="text-cyan-400 font-mono font-bold">0</span> <span class="text-slate-500">m/s</span></div></div>
+          <input id="windX" type="range" min="-5" max="5" step="0.5" value="0" class="w-full">
+        </div>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Wind Z (Crosswind)</label><div><span id="windZ-val" class="text-cyan-400 font-mono font-bold">0</span> <span class="text-slate-500">m/s</span></div></div>
+          <input id="windZ" type="range" min="-5" max="5" step="0.5" value="0" class="w-full">
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">4. Sphere Configuration</h3>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Ball Mass</label><div><span id="mass-val" class="text-cyan-400 font-mono font-bold">0.625</span> <span class="text-slate-500">kg</span></div></div>
+          <input id="mass" type="range" min="0.4" max="0.8" step="0.02" value="0.625" class="w-full">
+        </div>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Drag Coefficient (Cd)</label><span id="cd-val" class="text-cyan-400 font-mono font-bold">0.5</span></div>
+          <input id="cd" type="range" min="0.3" max="0.7" step="0.05" value="0.5" class="w-full">
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">5. Target Spatial Vector</h3>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Hoop Distance</label><div><span id="x_hoop-val" class="text-cyan-400 font-mono font-bold">4.6</span> <span class="text-slate-500">m</span></div></div>
+          <input id="x_hoop" type="range" min="3.0" max="8.0" step="0.1" value="4.6" class="w-full">
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4 bg-slate-900/60 border-t border-white/5 space-y-1 font-mono text-[11px]">
+      <div class="text-[10px] font-bold text-slate-400 mb-1 uppercase tracking-wider">📡 Real-Time Telemetry</div>
+      <div class="flex justify-between"><span class="text-slate-400">Vector XYZ:</span><span id="tel-pos" class="text-cyan-400 font-bold">0.00, 2.00, 0.00</span></div>
+      <div class="flex justify-between"><span class="text-slate-400">Speed |v|:</span><span id="tel-spd" class="text-cyan-400 font-bold">0.00 m/s</span></div>
+      <div class="flex justify-between"><span class="text-slate-400">Velocity Y:</span><span id="tel-vy" class="text-cyan-400 font-bold">0.00 m/s</span></div>
+      <div class="flex justify-between"><span class="text-slate-400">Decay Spin:</span><span id="tel-omg" class="text-cyan-400 font-bold">20.0 rad/s</span></div>
+    </div>
+
+    <div class="p-4 bg-slate-950 border-t border-white/10 space-y-2">
+      <div class="flex items-center justify-between bg-slate-900 px-2 py-1 rounded border border-white/5">
+        <span class="text-[10px] uppercase font-bold text-slate-400">Rate:</span>
+        <div class="flex gap-1">
+          <button data-value="0.25" class="speed-btn px-1.5 py-0.5 rounded text-[10px] font-mono bg-slate-800 transition cursor-pointer">.25x</button>
+          <button data-value="0.5" class="speed-btn px-1.5 py-0.5 rounded text-[10px] font-mono bg-slate-800 transition cursor-pointer">.5x</button>
+          <button data-value="1" class="speed-btn px-1.5 py-0.5 rounded text-[10px] font-mono bg-slate-600 text-white transition cursor-pointer">1x</button>
+          <button data-value="2" class="speed-btn px-1.5 py-0.5 rounded text-[10px] font-mono bg-slate-800 transition cursor-pointer">2x</button>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <button id="launch-btn" class="bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold py-2 rounded text-xs tracking-wide cursor-pointer transition shadow-lg shadow-orange-500/20">🚀 LAUNCH</button>
+        <button id="reset-btn" class="bg-slate-800 hover:bg-slate-700 active:scale-95 text-slate-300 font-bold py-2 rounded text-xs tracking-wide cursor-pointer transition">🔄 RESET</button>
+      </div>
+      <button id="analytics-btn" class="w-full bg-slate-900 border border-white/5 hover:bg-slate-800 py-1.5 rounded text-[11px] font-medium tracking-wide text-slate-300 cursor-pointer transition">📊 TOGGLE COMPREHENSIVE ANALYTICS</button>
+    </div>
+  </aside>
+
+  <div id="analytics-overlay" class="hidden fixed top-4 left-4 bg-slate-950/95 border border-white/10 backdrop-blur-md p-4 rounded-lg w-64 z-30 space-y-2.5 shadow-2xl">
+    <div class="text-xs font-bold text-orange-400 border-b border-white/5 pb-1 uppercase tracking-wider">📊 Evaluation Performance</div>
+    <div class="grid grid-cols-2 gap-y-1.5 text-[11px] font-mono">
+      <span class="text-slate-400">Apex Max Y:</span><span id="an-height" class="text-right text-white font-bold">-</span>
+      <span class="text-slate-400">Total X Range:</span><span id="an-range" class="text-right text-white font-bold">-</span>
+      <span class="text-slate-400">Air Flight Time:</span><span id="an-time" class="text-right text-white font-bold">-</span>
+      <span class="text-slate-400">Rim Entry Angle:</span><span id="an-angle" class="text-right text-white font-bold">-</span>
+      <span class="text-slate-400 font-bold border-t border-white/10 pt-1">Final Vector:</span><span id="an-status" class="text-right font-bold border-t border-white/10 pt-1 text-white">-</span>
+    </div>
+  </div>
+
+  <div id="flash-banner" class="fixed inset-0 flex items-center justify-center bg-transparent backdrop-blur-none pointer-events-none opacity-0 transition-all duration-300 z-50">
+    <h2 id="flash-text" class="text-5xl font-black tracking-widest drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"></h2>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

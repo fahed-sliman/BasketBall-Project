@@ -1,6 +1,7 @@
 import type { SimParams } from '../types';
 
 export function initControlPanel(onLaunch: () => void, onReset: () => void, params: SimParams) {
+
   const setupSlider = (id: string, key: keyof SimParams) => {
     const el = document.getElementById(id) as HTMLInputElement;
     const view = document.getElementById(`${id}-val`);
@@ -18,10 +19,14 @@ export function initControlPanel(onLaunch: () => void, onReset: () => void, para
   setupSlider('phi', 'phi');
   setupSlider('omega', 'omega');
   setupSlider('windX', 'windX');
+  setupSlider('windY', 'windY');
   setupSlider('windZ', 'windZ');
   setupSlider('mass', 'mass');
   setupSlider('cd', 'cd');
+  setupSlider('spinDecay', 'spinDecay');
+  setupSlider('restitution', 'restitution');
   setupSlider('x_hoop', 'x_hoop');
+
 
   // Multi-type selection selectors loops configuration bindings
   document.querySelectorAll('.spin-btn').forEach(btn => {

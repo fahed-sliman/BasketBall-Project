@@ -1,0 +1,11 @@
+Model Information:
+* title:	v0 Basketball Player Free
+* source:	https://sketchfab.com/3d-models/v0-basketball-player-free-1a9bb54337cc4452a3438b24ee18bb3c
+* author:	Tulio Portela (https://sketchfab.com/TulioPortela)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "v0 Basketball Player Free" (https://sketchfab.com/3d-models/v0-basketball-player-free-1a9bb54337cc4452a3438b24ee18bb3c) by Tulio Portela (https://sketchfab.com/TulioPortela) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

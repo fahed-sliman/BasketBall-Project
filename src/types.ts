@@ -1,4 +1,4 @@
-export type SpinType = 'Backspin' | 'Topspin' | 'None';
+export type SpinType = 'Backspin' | 'Topspin' | 'Sidespin' | 'None';
 export type VenueType = 'Indoor' | 'Outdoor';
 
 export interface SimParams {
@@ -9,9 +9,12 @@ export interface SimParams {
   spinType: SpinType;
   venue: VenueType;
   windX: number;
+  windY: number;
   windZ: number;
   mass: number;
   cd: number;
+  spinDecay: number;
+  restitution: number;
   x_hoop: number;
   playbackSpeed: number;
 }
@@ -36,5 +39,6 @@ export interface AnalyticsData {
   flightTime: number;
   entryAngle: number;
   scored: boolean;
+  maxCollisionImpulse: number;
 }
 

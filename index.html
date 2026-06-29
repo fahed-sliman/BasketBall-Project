@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,19 +44,29 @@
           <div class="flex justify-between"><label>Spin Rate (ω)</label><div><span id="omega-val" class="text-cyan-400 font-mono font-bold">20</span> <span class="text-slate-500">rad/s</span></div></div>
           <input id="omega" type="range" min="0" max="40" step="1" value="20" class="w-full">
         </div>
-        <div class="grid grid-cols-3 gap-1 pt-0.5">
+        
+        <div class="space-y-1.5">
+  <div class="flex justify-between"><label>Spin Decay (b)</label><div><span id="spinDecay-val" class="text-cyan-400 font-mono font-bold">0.10</span></div></div>
+  <input id="spinDecay" type="range" min="0.01" max="0.5" step="0.01" value="0.1" class="w-full">
+</div>
+
+
+        <div class="grid grid-cols-4 gap-1 pt-0.5">
           <button data-value="Backspin" class="spin-btn py-1 text-[11px] rounded bg-orange-500 text-white font-medium cursor-pointer transition">Backspin</button>
           <button data-value="Topspin" class="spin-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">Topspin</button>
+<button data-value="Sidespin" class="spin-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">Sidespin</button>
           <button data-value="None" class="spin-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">None</button>
         </div>
       </div>
 
       <div class="space-y-3">
         <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400">3. Fluid Environment</h3>
+
         <div class="grid grid-cols-2 gap-1 mb-1">
-          <button data-value="Indoor" class="venue-btn py-1 text-[11px] rounded bg-cyan-500 text-white font-medium cursor-pointer transition">Indoor (ρ=1.2)</button>
-          <button data-value="Outdoor" class="venue-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">Outdoor (ρ=1.1)</button>
-        </div>
+  <button data-value="Indoor" class="venue-btn py-1 text-[11px] rounded bg-cyan-500 text-white cursor-pointer transition">Indoor (ρ=1.225)</button>
+  <button data-value="Outdoor" class="venue-btn py-1 text-[11px] rounded bg-slate-900 text-slate-400 cursor-pointer transition">Outdoor (ρ=1.2)</button>
+</div>
+
         <div class="space-y-1.5">
           <div class="flex justify-between"><label>Wind X (Forward/Head)</label><div><span id="windX-val" class="text-cyan-400 font-mono font-bold">0</span> <span class="text-slate-500">m/s</span></div></div>
           <input id="windX" type="range" min="-5" max="5" step="0.5" value="0" class="w-full">
@@ -63,6 +74,10 @@
         <div class="space-y-1.5">
           <div class="flex justify-between"><label>Wind Z (Crosswind)</label><div><span id="windZ-val" class="text-cyan-400 font-mono font-bold">0</span> <span class="text-slate-500">m/s</span></div></div>
           <input id="windZ" type="range" min="-5" max="5" step="0.5" value="0" class="w-full">
+        </div>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Wind Y (Vertical)</label><div><span id="windY-val" class="text-cyan-400 font-mono font-bold">0</span> <span class="text-slate-500">m/s</span></div></div>
+          <input id="windY" type="range" min="-5" max="5" step="0.5" value="0" class="w-full">
         </div>
       </div>
 
@@ -75,6 +90,10 @@
         <div class="space-y-1.5">
           <div class="flex justify-between"><label>Drag Coefficient (Cd)</label><span id="cd-val" class="text-cyan-400 font-mono font-bold">0.5</span></div>
           <input id="cd" type="range" min="0.3" max="0.7" step="0.05" value="0.5" class="w-full">
+        </div>
+        <div class="space-y-1.5">
+          <div class="flex justify-between"><label>Restitution (e)</label><div><span id="restitution-val" class="text-cyan-400 font-mono font-bold">0.5</span> <span class="text-slate-500"></span></div></div>
+          <input id="restitution" type="range" min="0.1" max="0.9" step="0.05" value="0.5" class="w-full">
         </div>
       </div>
 
@@ -120,6 +139,7 @@
       <span class="text-slate-400">Total X Range:</span><span id="an-range" class="text-right text-white font-bold">-</span>
       <span class="text-slate-400">Air Flight Time:</span><span id="an-time" class="text-right text-white font-bold">-</span>
       <span class="text-slate-400">Rim Entry Angle:</span><span id="an-angle" class="text-right text-white font-bold">-</span>
+      <span class="text-slate-400">Collision Impulse:</span><span id="an-impulse" class="text-right text-orange-400 font-bold">-</span>
       <span class="text-slate-400 font-bold border-t border-white/10 pt-1">Final Vector:</span><span id="an-status" class="text-right font-bold border-t border-white/10 pt-1 text-white">-</span>
     </div>
   </div>
